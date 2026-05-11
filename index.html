@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>認識燃燒與生鏽</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-text">
+      <p class="eyebrow">五下自然 第 2 單元</p>
+      <h1>認識燃燒與生鏽</h1>
+      <p>用互動模型看懂燃燒、氣體特性與鐵生鏽。</p>
+    </div>
+    <div class="hero-lab" aria-label="燃燒與生鏽視覺模擬">
+      <canvas id="heroCanvas" width="720" height="420"></canvas>
+      <div class="hero-meter">
+        <span>燃燒</span>
+        <strong id="heroBurnLabel">穩定燃燒</strong>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <nav class="topic-tabs" aria-label="學習主題">
+      <a href="#burn">燃燒控制盤</a>
+      <a href="#gas">氣體實驗</a>
+      <a href="#rust">生鏽實驗</a>
+      <a href="#protect">防鏽任務</a>
+      <a href="#quiz">總複習</a>
+    </nav>
+
+    <section class="learning-map" aria-labelledby="map-title">
+      <div>
+        <p class="eyebrow">課本重點整理</p>
+        <h2 id="map-title">兩個現象，都跟空氣有關</h2>
+      </div>
+      <div class="map-grid">
+        <article>
+          <span class="number">01</span>
+          <h3>燃燒需要三個條件</h3>
+          <p>可燃物、助燃物和達到燃點要同時存在；移除任一條件，就能讓火熄滅。</p>
+        </article>
+        <article>
+          <span class="number">02</span>
+          <h3>氧氣助燃，二氧化碳不助燃</h3>
+          <p>氧氣會讓點燃的線香更旺；二氧化碳會讓線香熄滅，可用於滅火。</p>
+        </article>
+        <article>
+          <span class="number">03</span>
+          <h3>生鏽是緩慢作用</h3>
+          <p>鐵與空氣中的氧氣作用，若加上水或酸性水溶液，生鏽會更明顯或更快。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="module" id="burn" aria-labelledby="burn-title">
+      <div class="section-heading">
+        <p class="eyebrow">活動 1</p>
+        <h2 id="burn-title">燃燒控制盤</h2>
+        <p>切換燃燒三要素，觀察火焰會如何改變。</p>
+      </div>
+      <div class="two-column">
+        <div class="control-panel">
+          <label class="switch-row">
+            <input type="checkbox" id="fuelToggle" checked>
+            <span>可燃物</span>
+            <small>紙張、蠟油、瓦斯等可以燃燒的物質</small>
+          </label>
+          <label class="switch-row">
+            <input type="checkbox" id="oxygenToggle" checked>
+            <span>助燃物</span>
+            <small>空氣中的氧氣能幫助燃燒</small>
+          </label>
+          <label class="switch-row">
+            <input type="checkbox" id="heatToggle" checked>
+            <span>達到燃點</span>
+            <small>溫度足夠，可燃物才會開始燃燒</small>
+          </label>
+          <div class="method-box">
+            <h3>目前判斷</h3>
+            <p id="burnResult">三要素齊全，火會持續燃燒。</p>
+          </div>
+        </div>
+        <div class="burn-stage">
+          <div class="flame-wrap" aria-hidden="true">
+            <div class="flame flame-back"></div>
+            <div class="flame flame-front"></div>
+            <div class="wick"></div>
+          </div>
+          <div class="burn-chips" id="burnChips"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="module band" id="gas" aria-labelledby="gas-title">
+      <div class="section-heading">
+        <p class="eyebrow">活動 2</p>
+        <h2 id="gas-title">氣體實驗桌</h2>
+        <p>選一種氣體，觀察點燃的線香會變旺、維持，還是熄滅。</p>
+      </div>
+      <div class="gas-layout">
+        <div class="gas-buttons" role="group" aria-label="選擇氣體">
+          <button class="gas-btn active" data-gas="air" type="button">一般空氣</button>
+          <button class="gas-btn" data-gas="oxygen" type="button">氧氣</button>
+          <button class="gas-btn" data-gas="co2" type="button">二氧化碳</button>
+        </div>
+        <div class="jar-scene" aria-live="polite">
+          <div class="jar">
+            <div class="gas-fill" id="gasFill"></div>
+            <div class="incense" id="incense">
+              <span></span>
+            </div>
+          </div>
+          <div class="gas-note">
+            <h3 id="gasName">一般空氣</h3>
+            <p id="gasDescription">空氣含有約 21% 氧氣，所以可支持一般燃燒。</p>
+            <div class="recipe" id="gasRecipe">空氣主要由氮氣、氧氣，以及少量其他氣體組成。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="module" id="rust" aria-labelledby="rust-title">
+      <div class="section-heading">
+        <p class="eyebrow">活動 3</p>
+        <h2 id="rust-title">鋼棉生鏽實驗</h2>
+        <p>改變水、酸性水溶液和氧氣，看看鐵鏽形成速度。</p>
+      </div>
+      <div class="two-column">
+        <div class="control-panel">
+          <label class="range-row">
+            <span>水分</span>
+            <input type="range" id="waterRange" min="0" max="100" value="65">
+          </label>
+          <label class="range-row">
+            <span>酸性水溶液</span>
+            <input type="range" id="acidRange" min="0" max="100" value="20">
+          </label>
+          <label class="switch-row compact">
+            <input type="checkbox" id="rustOxygenToggle" checked>
+            <span>接觸空氣中的氧氣</span>
+          </label>
+          <label class="range-row">
+            <span>放置時間</span>
+            <input type="range" id="timeRange" min="1" max="10" value="5">
+          </label>
+          <div class="method-box">
+            <h3>變因提示</h3>
+            <p id="variableHint">一次只改變一個因素，較容易判斷原因。</p>
+          </div>
+        </div>
+        <div class="rust-stage">
+          <div class="steel-wool" id="steelWool" aria-label="鋼棉生鏽程度示意">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="rust-readout">
+            <span>生鏽指數</span>
+            <strong id="rustScore">62</strong>
+          </div>
+          <p id="rustExplanation">水分充足且有氧氣，鋼棉會逐漸生鏽；酸性水溶液會加快速度。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="module band" id="protect" aria-labelledby="protect-title">
+      <div class="section-heading">
+        <p class="eyebrow">生活應用</p>
+        <h2 id="protect-title">防鏽任務</h2>
+        <p>幫不同鐵製品選出合適的防鏽做法。</p>
+      </div>
+      <div class="mission-grid" id="missionGrid"></div>
+      <div class="mission-score">
+        <span>完成度</span>
+        <strong id="missionScore">0 / 3</strong>
+      </div>
+    </section>
+
+    <section class="module" id="quiz" aria-labelledby="quiz-title">
+      <div class="section-heading">
+        <p class="eyebrow">檢查理解</p>
+        <h2 id="quiz-title">總複習</h2>
+        <p>回答題目，確認自己是否已經掌握燃燒與生鏽的關鍵。</p>
+      </div>
+      <div class="quiz-box">
+        <div class="quiz-progress">
+          <span id="quizStep">第 1 題</span>
+          <span id="quizScore">得分 0</span>
+        </div>
+        <h3 id="quizQuestion"></h3>
+        <div class="quiz-options" id="quizOptions"></div>
+        <p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p>
+        <button class="primary-btn" id="nextQuestion" type="button">下一題</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>內容依據附件 PDF 課本單元重點整理：空氣與燃燒、氧氣與二氧化碳、空氣與生鏽。</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
